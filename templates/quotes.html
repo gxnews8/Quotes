@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+	<title>Quotes</title>
+	<link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+	<div class="ct">
+		<div class="header">
+			<h4>Welcome, {{ request.session.name }} !</h4>
+			<a href="/quotes">Home</a> |
+			<a href="/logoff">Log off</a>
+		</div>
+		<h3>Hello, {{ request.session.name }} </h3>
+
+		<div class="Quotes">
+			<h4>Quotable Quotes</h4>
+					<div class="quote">
+						{% for item in othersitems %}
+						{% if item.joinuser != currentuser %}
+						{{ item.quoted_by }}:
+						{{ item.item }}<br>
+						Posted by: <a href="/users/{{ item.adduser.id }}">{{ item.adduser.username}}</a> | <a href="/joinninglist/{{ item.id }}">Add to my list</a><p>
+						{% endif %}
+						{% endfor %}
+					</div>
+		</div>
+		<div class="Quotes">
+			<h4>Your Favoretes:</h4>
+					<!-- this list will show all the items for now -->
+					<div class="quote">
+						{% if hisitems %}
+						{% for item in hisitems %}
+
+						{{ item.quoted_by }}:
+						{{ item.item }}<br>
+						<a href="/deleteitem/{{ item.id }}">Delete</a><p>
+						{% endfor %}
+						{% endif %}
+
+						{% if hisotheritems %}
+						{% for item in hisotheritems %}
+						{{ item.quoted_by }}:
+						{{ item.item }}<br>
+						Posted by: <a href="/users/{{ item.adduser.id }}">{{ item.adduser.username}}</a> | <a href="/removeitem/{{ item.id}}">Remove from my list</a>
+						{% endfor %}
+						{% endif %}
+					</div>
+
+			<h5>Contribute a Quote:</h5>
+			<form action="/addingitem" method="post">{% csrf_token %}
+				<label>Quote By:</label>
+				<input type="text" name="quoted_by"><br><br>
+				<label>Message:</label>
+				<textarea name="itemname" rows="8" ></textarea><br><br>
+				<input type="submit" value="Submit">
+			</form>
+
+			{% if messages %}
+			{% for message in messages %}
+			<p>{{ message }}</p>
+			{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+</body>
+</html>

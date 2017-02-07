@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+	<title>Quotes</title>
+	<link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+
+		<h4>Welcome  {{ request.session.name }} !</h4>
+		<a href="/quotes">Home</a> |
+		<a href="/logoff">Log off</a>
+
+
+
+
+		<h4>Posts by {{ poster.first_name }} </h4>
+		Count: {{ count }}
+		{% if items %}
+		<P>
+		{% for item in items %}
+			<font class="red">{{ item.quoted_by }}</font>:
+			{{ item.item }}<p>
+		{% endfor %}
+
+		{% else %}
+		<p>No data, yet!</p>
+		{% endif %}
+
+
+
+</body>
+</html>

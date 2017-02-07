@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Quotes</title>
+</head>
+<body>
+
+			<h4>Welcome, {{ request.session.name }} ! | </h4>
+			<a href="{% url 'quotes' %}">Home</a>
+
+			<h5>Create a New Wish List Item</h5>
+			<form action="/addingitem" method="post">{% csrf_token %}
+				<label>Item/Product:</label>
+				<input type="text" name="itemname"><br><br>
+				<input type="submit" value="Add">
+			</form>
+
+			{% if messages %}
+			{% for message in messages %}
+			<p>{{ message }}</p>
+			{% endfor %}
+			{% endif %}
+
+</body>
+</html>
